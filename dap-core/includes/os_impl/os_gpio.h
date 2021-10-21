@@ -71,7 +71,7 @@ struct os_gpio_config {
 
 extern struct os_gpio_config gpio_config;
 
-static inline void sw_dp_swdio_enable(void)
+__STATIC_INLINE void sw_dp_swdio_enable(void)
 {
 #if defined(DAP_CORE_SWD_ENABLED)
 	struct os_gpio_cfg cfg = {
@@ -81,7 +81,7 @@ static inline void sw_dp_swdio_enable(void)
 #endif
 }
 
-static inline void sw_dp_swdio_disable(void)
+__STATIC_INLINE void sw_dp_swdio_disable(void)
 {
 #if defined(DAP_CORE_SWD_ENABLED)
 	struct os_gpio_cfg cfg = {
@@ -91,14 +91,14 @@ static inline void sw_dp_swdio_disable(void)
 #endif
 }
 
-static inline void sw_dp_swdio_set(void)
+__STATIC_INLINE void sw_dp_swdio_set(void)
 {
 #if defined(DAP_CORE_SWD_ENABLED)
 	gpio_config.set(gpio_config.swd_io, 1);
 #endif
 }
 
-static inline int sw_dp_swdio_get(void)
+__STATIC_INLINE int sw_dp_swdio_get(void)
 {
 #if defined(DAP_CORE_SWD_ENABLED)
 	return gpio_config.get(gpio_config.swd_io);
@@ -107,21 +107,21 @@ static inline int sw_dp_swdio_get(void)
 #endif
 }
 
-static inline void sw_dp_swdio_clear(void)
+__STATIC_INLINE void sw_dp_swdio_clear(void)
 {
 #if defined(DAP_CORE_SWD_ENABLED)
 	gpio_config.set(gpio_config.swd_io, 0);
 #endif
 }
 
-static inline void sw_dp_swdclk_set(void)
+__STATIC_INLINE void sw_dp_swdclk_set(void)
 {
 #if defined(DAP_CORE_SWD_ENABLED)
 	gpio_config.set(gpio_config.swd_clk, 1);
 #endif
 }
 
-static inline int sw_dp_swdclk_get(void)
+__STATIC_INLINE int sw_dp_swdclk_get(void)
 {
 #if defined(DAP_CORE_SWD_ENABLED)
 	return gpio_config.get(gpio_config.swd_clk);
@@ -130,7 +130,7 @@ static inline int sw_dp_swdclk_get(void)
 #endif
 }
 
-static inline void sw_dp_swdclk_clear(void)
+__STATIC_INLINE void sw_dp_swdclk_clear(void)
 {
 #if defined(DAP_CORE_SWD_ENABLED)
 	gpio_config.set(gpio_config.swd_clk, 0);
@@ -138,14 +138,14 @@ static inline void sw_dp_swdclk_clear(void)
 }
 
 /* TDI pin */
-static inline void jtag_tdi_set(uint8_t val)
+__STATIC_INLINE void jtag_tdi_set(uint8_t val)
 {
 #if defined(DAP_CORE_JTAG_ENABLED)
 	gpio_config.set(gpio_config.tdi, val);
 #endif
 }
 
-static inline uint8_t jtag_tdi_get(void)
+__STATIC_INLINE uint8_t jtag_tdi_get(void)
 {
 #if defined(DAP_CORE_JTAG_ENABLED)
 	return gpio_config.get(gpio_config.tdi);
@@ -155,7 +155,7 @@ static inline uint8_t jtag_tdi_get(void)
 }
 
 /* TDO pin */
-static inline uint8_t jtag_tdo_get(void)
+__STATIC_INLINE uint8_t jtag_tdo_get(void)
 {
 #if defined(DAP_CORE_JTAG_ENABLED)
 	return gpio_config.get(gpio_config.tdo);
@@ -165,14 +165,14 @@ static inline uint8_t jtag_tdo_get(void)
 }
 
 /* TRST pin */
-static inline void jtag_trst_set(uint8_t val)
+__STATIC_INLINE void jtag_trst_set(uint8_t val)
 {
 #if defined(DAP_CORE_JTAG_ENABLED)
 	gpio_config.set(gpio_config.trst, val);
 #endif
 }
 
-static inline uint8_t jtag_trst_get(void)
+__STATIC_INLINE uint8_t jtag_trst_get(void)
 {
 #if defined(DAP_CORE_JTAG_ENABLED)
 	return gpio_config.get(gpio_config.trst);
@@ -182,14 +182,14 @@ static inline uint8_t jtag_trst_get(void)
 }
 
 /* nRST pin */
-static inline void target_rst_set(uint8_t val)
+__STATIC_INLINE void target_rst_set(uint8_t val)
 {
 #if defined(DAP_CORE_TARGET_RESET_ENABLED)
 	gpio_config.set(gpio_config.reset, val);
 #endif
 }
 
-static inline uint8_t target_rdst_get(void)
+__STATIC_INLINE uint8_t target_rdst_get(void)
 {
 #if defined(DAP_CORE_TARGET_RESET_ENABLED)
 	return gpio_config.get(gpio_config.reset);
@@ -198,7 +198,7 @@ static inline uint8_t target_rdst_get(void)
 #endif
 }
 
-static inline void swd_port_setup(void)
+__STATIC_INLINE void swd_port_setup(void)
 {
 #if defined(DAP_CORE_SWD_ENABLED)
 	struct os_gpio_cfg cfg = {
@@ -210,14 +210,14 @@ static inline void swd_port_setup(void)
 #endif
 }
 
-static inline void jtag_port_setup(void)
+__STATIC_INLINE void jtag_port_setup(void)
 {
 #if defined(DAP_CORE_JTAG_ENABLED)
 	/* TODO */
 #endif
 }
 
-static inline void swd_jtag_port_off(void)
+__STATIC_INLINE void swd_jtag_port_off(void)
 {
 #if defined(DAP_CORE_SWD_ENABLED)
 	struct os_gpio_cfg cfg = {

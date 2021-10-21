@@ -36,17 +36,17 @@ struct os_timing_config {
 
 extern struct os_timing_config timing_config;
 
-static inline uint32_t timestamp_get(void)
+__STATIC_INLINE uint32_t timestamp_get(void)
 {
 	return timing_config.get_timestamp();
 }
 
-static inline uint32_t system_clock_get(void)
+__STATIC_INLINE uint32_t system_clock_get(void)
 {
 	return timing_config.system_clock();
 }
 
-static inline void system_wait_ms(uint32_t time)
+__STATIC_INLINE void system_wait_ms(uint32_t time)
 {
 	timing_config.wait_ms(time);
 }

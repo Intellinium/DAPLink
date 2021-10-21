@@ -22,12 +22,12 @@
 #include <string.h>
 #include <dap/DAP_queue.h>
 
-void DAP_queue_init(DAP_queue * queue)
+void DAP_queue_init(DAP_queue *queue)
 {
-    queue->recv_idx = 0;
-    queue->send_idx = 0;
-    queue->free_count = FREE_COUNT_INIT;
-    queue->send_count = SEND_COUNT_INIT;
+	queue->recv_idx = 0;
+	queue->send_idx = 0;
+	queue->free_count = FREE_COUNT_INIT;
+	queue->send_count = SEND_COUNT_INIT;
 }
 
 /*
@@ -36,17 +36,17 @@ void DAP_queue_init(DAP_queue * queue)
  *    Return Value:    TRUE - Success, FALSE - Error
  */
 
-BOOL DAP_queue_get_send_buf(DAP_queue * queue, uint8_t ** buf, int * len)
+BOOL DAP_queue_get_send_buf(DAP_queue *queue, uint8_t **buf, int *len)
 {
-    if (queue->send_count) {
-        queue->send_count--;
-        *buf = queue->USB_Request[queue->send_idx];
-        *len = queue->resp_size[queue->send_idx];
-        queue->send_idx = (queue->send_idx + 1) % DAP_CORE_PACKET_COUNT;
-        queue->free_count++;
-        return (__TRUE);
-    }
-    return (__FALSE);
+	if (queue->send_count) {
+		queue->send_count--;
+		*buf = queue->USB_Request[queue->send_idx];
+		*len = queue->resp_size[queue->send_idx];
+		queue->send_idx = (queue->send_idx + 1) % DAP_CORE_PACKET_COUNT;
+		queue->free_count++;
+		return (__TRUE);
+	}
+	return (__FALSE);
 }
 
 /*
@@ -56,21 +56,24 @@ BOOL DAP_queue_get_send_buf(DAP_queue * queue, uint8_t ** buf, int * len)
  */
 
 
-BOOL DAP_queue_execute_buf(DAP_queue * queue, const uint8_t *reqbuf, int len, uint8_t ** retbuf)
+BOOL DAP_queue_execute_buf(DAP_queue *queue, const uint8_t *reqbuf, int len,
+			   uint8_t **retbuf)
 {
-    uint32_t rsize;
-    if (queue->free_count > 0) {
-        if (len > DAP_CORE_PACKET_SIZE) {
-            len = DAP_CORE_PACKET_SIZE;
-        }
-        queue->free_count--;
-        memcpy(queue->USB_Request[queue->recv_idx], reqbuf, len);
-        rsize = DAP_ExecuteCommand(reqbuf, queue->USB_Request[queue->recv_idx]);
-        queue->resp_size[queue->recv_idx] = rsize & 0xFFFF; //get the response size
-        *retbuf = queue->USB_Request[queue->recv_idx];
-        queue->recv_idx = (queue->recv_idx + 1) % DAP_CORE_PACKET_COUNT;
-        queue->send_count++;
-        return (__TRUE);
-    }
-    return (__FALSE);
+	uint32_t rsize;
+	if (queue->free_count > 0) {
+		if (len > DAP_CORE_PACKET_SIZE) {
+			len = DAP_CORE_PACKET_SIZE;
+		}
+		queue->free_count--;
+		memcpy(queue->USB_Request[queue->recv_idx], reqbuf, len);
+		rsize = DAP_ExecuteCommand(reqbuf,
+					   queue->USB_Request[queue->recv_idx]);
+		queue->resp_size[queue->recv_idx] =
+			rsize & 0xFFFF; //get the response size
+		*retbuf = queue->USB_Request[queue->recv_idx];
+		queue->recv_idx = (queue->recv_idx + 1) % DAP_CORE_PACKET_COUNT;
+		queue->send_count++;
+		return (__TRUE);
+	}
+	return (__FALSE);
 }
